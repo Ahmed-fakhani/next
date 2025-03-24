@@ -2,10 +2,9 @@ import { Nav, NavLink } from "@/components/Nav"
 
 export default function AdminLayout({
     children,
-
-}:Readonly<{
-    children: React.ReactNode
-}>) {
+  }: Readonly<{
+    children: React.ReactNode;
+  }>) {
     return <>
     <Nav>
         <NavLink href="/admin">Dashboard</NavLink>
@@ -13,5 +12,6 @@ export default function AdminLayout({
         <NavLink href="/admin/users">Customers</NavLink>
         <NavLink href="/admin/orders">Sales</NavLink>
     </Nav>
+    {children}
     </> 
 }
