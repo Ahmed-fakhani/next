@@ -17,7 +17,7 @@ const addSchema = z.object({
     image: fileSchema.refine(file => file.size > 0, "Required")
 })
 
-export async function addProduct(formData: FormData){
+export async function addProduct(prevState: unknown, formData: FormData){
     const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
     if (result.success ===false) {
         return result.error.formErrors.fieldErrors
@@ -32,7 +32,7 @@ export async function addProduct(formData: FormData){
     const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
     await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
 
-    db.product.create({ data:
+    await db.product.create({ data:
         {
             name: data.name,
             description: data.description,
@@ -41,6 +41,7 @@ export async function addProduct(formData: FormData){
             imagePath
 
         }})
+    
 
         redirect("/admin/products")
 }
