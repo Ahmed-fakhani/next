@@ -3,7 +3,7 @@ import db from "@/db/db"
 import { z } from "zod"
 import fs from "fs/promises"
 import { buffer } from "stream/consumers"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 
 const fileSchema = z.instanceof(File, {message: "Required"})
@@ -44,4 +44,15 @@ export async function addProduct(prevState: unknown, formData: FormData){
     
 
         redirect("/admin/products")
+}
+export async function toggleProductAvailability(id:string, IsAvailableForPurchase: boolean) {
+    await db.product.update({ where: { id }, data: {
+        IsAvailableForPurchase
+    }})
+    
+}
+export async function deleteProduct(id: string) {
+    const product = await db.product.delete({where : {id}})
+    if (product == null) return notFound()
+
 }
