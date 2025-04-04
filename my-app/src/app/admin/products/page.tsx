@@ -62,7 +62,7 @@ async function ProductTable() {
                         <TableCell>
                             {product.IsAvailableForPurchase ?
                                 <> <span className="sr-only">Avaliable</span><CheckCircle2 />
-                                </> : <><span className="sr-only">Unavaliable</span><XCircle /></>}
+                                </> : <><span className="sr-only">Unavaliable</span><XCircle className="stroke-destructive"/></>}
 
                         </TableCell>
                         <TableCell>{product.name}</TableCell>
@@ -79,13 +79,14 @@ async function ProductTable() {
                                         <a download href={`/admin/products/${product.id}/download`}>Download</a>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem asChild>
-                                        <Link href={`/admin/products/${product.id}/download`}>Edit</Link>
+                                        <Link href={`/admin/products/${product.id}/edit`}>Edit</Link>
                                     </DropdownMenuItem>
                                     <ActiveToggleDropdownItem id={product.id}
                                     IsAvailableForPurchase={product.IsAvailableForPurchase}
                                     />
                                     <DropdownMenuSeparator/>
                                     <DeleteDropdownItem 
+                    
                                     id= {product.id}
                                     disabled= {product._count.orders > 0}
                                     />

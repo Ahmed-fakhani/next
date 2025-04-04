@@ -35,6 +35,7 @@ export async function addProduct(prevState: unknown, formData: FormData){
     await db.product.create({ data:
         {
             name: data.name,
+            IsAvailableForPurchase: false,
             description: data.description,
             priceInCents: data.priceInCents,
             filePath,
@@ -54,5 +55,7 @@ export async function toggleProductAvailability(id:string, IsAvailableForPurchas
 export async function deleteProduct(id: string) {
     const product = await db.product.delete({where : {id}})
     if (product == null) return notFound()
+    await fs.unlink(product.filePath)
+    await fs.unlink(`public${product.imagePath}`)
 
 }
